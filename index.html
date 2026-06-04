@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Кафе Счастье</title>
-<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кафе Счастье</title>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 </head>
-<body style="font-family:Arial;padding:20px">
+<body style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
 
-<h1 id="hello">Здравствуйте!</h1>
-<p>Рады видеть вас в кафе «Счастье» ☕️</p>
+    <h1 id="hello">Загрузка...</h1>
 
-<script>
-async function init() {
-  await vkBridge.send('VKWebAppInit');
+    <p>Рады видеть вас в кафе «Счастье» ☕️</p>
 
-  const user = await vkBridge.send('VKWebAppGetUserInfo');
-
-  document.getElementById('hello').innerText =
-    Добрый день, ${user.first_name}!;
-}
-
-init();
-</script>
+    <script>
+        vkBridge.send('VKWebAppInit')
+            .then(() => {
+                return vkBridge.send('VKWebAppGetUserInfo');
+            })
+            .then((user) => {
+                document.getElementById('hello').innerText =
+                    Добрый день, ${user.first_name}!;
+            })
+            .catch((error) => {
+                console.error(error);
+                document.getElementById('hello').innerText =
+                    'Добро пожаловать в кафе «Счастье»!';
+            });
+    </script>
 
 </body>
 </html>
