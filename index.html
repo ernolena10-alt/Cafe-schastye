@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Кафе Счастье</title>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+</head>
+<body style="font-family:Arial;padding:20px">
+
+<h1 id="hello">Здравствуйте!</h1>
+<p>Рады видеть вас в кафе «Счастье» ☕️</p>
+
+<script>
+async function init() {
+  await vkBridge.send('VKWebAppInit');
+
+  const user = await vkBridge.send('VKWebAppGetUserInfo');
+
+  document.getElementById('hello').innerText =
+    Добрый день, ${user.first_name}!;
+}
+
+init();
+</script>
+
+</body>
+</html>
